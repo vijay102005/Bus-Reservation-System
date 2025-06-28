@@ -1,40 +1,43 @@
 package busResv;
 
-import java.util.Scanner; //nested package/ hierarchical package
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class BusDemo {
+    public static void main(String[] args) throws Exception {
+        Scanner scanner = new Scanner(System.in);
+        int userInput;
 
-	public static void main(String[] args) {
-		
-	
-		ArrayList<Bus> buses = new ArrayList<Bus>();
-		ArrayList<Booking> bookings = new ArrayList<Booking>();
-		
-		buses.add(new Bus(1,true,2));
-		buses.add(new Bus(2,false,50));
-		buses.add(new Bus(3,true,48));
-		
-		int userOpt = 1;
-		Scanner scanner = new Scanner(System.in);
-		
-		for(Bus b:buses) {
-			b.displayBusInfo();
-		}
-		
-		while(userOpt==1) {
-			System.out.println("Enter 1 to Book and 2 to exit");
-			userOpt = scanner.nextInt();
-			if(userOpt == 1) {
-				Booking booking = new Booking();
-				if(booking.isAvailable(bookings,buses)) {
-					bookings.add(booking);
-					System.out.println("Your booking is confirmed");
-				}
-				else
-					System.out.println("Sorry. Bus is full. Try another bus or date.");
-			}
-		}
-	}
+        do {
+            System.out.println("\n=== Bus Reservation System ===");
+            System.out.println("1. Display Buses");
+            System.out.println("2. Book Ticket");
+            System.out.println("3. Cancel Booking");
+            System.out.println("4. Show Bookings");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice: ");
+            userInput = scanner.nextInt();
 
+            switch (userInput) {
+                case 1:
+                    Bus.displayAvailableBuses();
+                    break;
+                case 2:
+                    Booking booking = new Booking();
+                    booking.confirmBooking();
+                    break;
+                case 3:
+                    Booking.cancelBooking();
+                    break;
+                case 4:
+                    Booking.showBookingsForBus();
+                    break;
+                case 5:
+                    System.out.println("Thank you for using the system!");
+                    break;
+                default:
+                    System.out.println("Invalid input. Try again.");
+            }
+        } while (userInput != 5);
+    }
 }
+
